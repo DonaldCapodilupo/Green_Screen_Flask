@@ -1,4 +1,3 @@
-from playsound import   playsound
 import time
 from pyautogui import hotkey
 import os
@@ -8,7 +7,10 @@ from pygame import mixer
 #Dict = userInput: (Image, MP3, scene_hotkey, length)
 dict_Of_Scenes = {
     "Beach":("Beach.jpg", "Johnny B Goode.mp3",1, 54),
-    "Graveyard":("Graveyard.jpg", "Thriller.mp3",7, 47)
+    "Graveyard":("Graveyard.jpg", "Thriller.mp3",7, 47),
+    "Disco":("Disco Backround.mp4", "Funky Town.mp3", 9, 46),
+    "Old West":("Old West Town.jpg", "Old Town Road.mp3", 5, 29),
+    "Outer Space":("Space.png", "Rocketman.mp3", 3, 52)
 
 
 }
@@ -71,23 +73,10 @@ def countdown(t):
 
 
 
-# ]url = ex. "C:\\Users\\Don\\Documents\\Github Folder\\Green_Screen_Flask\\Audio\\Johnny B Goode.mp3"
-def play_Music(url):
-    playsound(url)
-
-
-def record_Scene(scene_Image, song):
-
-
-
-
-
-
+def record_Scene(scene_Image):
     win = gw.getWindowsWithTitle('OBS')[0]
     win.maximize()
     win.activate()
-
-
 
     countdown(7)
 
@@ -100,19 +89,20 @@ def record_Scene(scene_Image, song):
     mixer.music.play()
     time.sleep(dict_Of_Scenes[scene_Image][3])
 
-#play_Music("C:\\Users\\Don\\Documents\\Github Folder\\Green_Screen_Flask\\Audio\\Johnny B Goode.mp3")
 
     hotkey('alt', '/')
 
-    hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
-
+    if dict_Of_Scenes[scene_Image][2]+1 == 10:
+        hotkey('shift', '0')
+    else:
+        hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
 
     win = gw.getWindowsWithTitle('Green_Screen_Flask')[0]
     win.maximize()
     win.activate()
 
 
-scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard"]
+scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard", "Disco"]
 
 if __name__ == '__main__':
     while True:
