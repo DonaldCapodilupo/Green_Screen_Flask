@@ -5,9 +5,10 @@ import os
 import pygetwindow as gw
 from pygame import mixer
 
-
+#Dict = userInput: (Image, MP3, scene_hotkey, length)
 dict_Of_Scenes = {
-    "Beach":("Beach.jpg", "Johnny B Goode.mp3"),
+    "Beach":("Beach.jpg", "Johnny B Goode.mp3",1, 54),
+    "Graveyard":("Graveyard.jpg", "Thriller.mp3",7, 47)
 
 
 }
@@ -78,11 +79,6 @@ def play_Music(url):
 def record_Scene(scene_Image, song):
 
 
-    background_Selection = {
-        "Beach":1,
-        "Outer Space":3,
-        "Old West":6
-    }
 
 
 
@@ -95,20 +91,20 @@ def record_Scene(scene_Image, song):
 
     countdown(7)
 
-    hotkey('shift', str(background_Selection[scene_Image]))
+    hotkey('shift', str(dict_Of_Scenes[scene_Image][2]))
 
     hotkey('alt', '/')
 
     mixer.init()
     mixer.music.load('Audio\\' + dict_Of_Scenes[user_Choice][1])
     mixer.music.play()
-    time.sleep(54)
+    time.sleep(dict_Of_Scenes[scene_Image][3])
 
 #play_Music("C:\\Users\\Don\\Documents\\Github Folder\\Green_Screen_Flask\\Audio\\Johnny B Goode.mp3")
 
     hotkey('alt', '/')
 
-    hotkey('shift', str(background_Selection[scene_Image]+1))
+    hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
 
 
     win = gw.getWindowsWithTitle('Green_Screen_Flask')[0]
@@ -116,7 +112,7 @@ def record_Scene(scene_Image, song):
     win.activate()
 
 
-scenes = ["Beach", "Outer Space","Old West", "Mugshot"]
+scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard"]
 
 if __name__ == '__main__':
     while True:
