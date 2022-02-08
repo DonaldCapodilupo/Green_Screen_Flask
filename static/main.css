@@ -1,0 +1,27 @@
+.main_Title{
+    font-size: 70px;
+    font-weight: bold;
+    background: lightblue;
+}
+
+.instructions{
+    font-size: 50px;
+    font-weight: bold;
+    background: paleturquoise;
+}
+
+body{
+    background: lightskyblue;
+}
+img {
+    width: 300px;
+    height: 200px;
+    border: black 2px solid;
+
+}
+.button_Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

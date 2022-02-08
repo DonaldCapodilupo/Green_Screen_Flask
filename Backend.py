@@ -1,8 +1,10 @@
+#!/bin/bash
 import time
 from pyautogui import hotkey
 import os
 import pygetwindow as gw
 from pygame import mixer
+import pyautogui
 
 #Dict = userInput: (Image, MP3, scene_hotkey, length)
 dict_Of_Scenes = {
@@ -73,19 +75,37 @@ def countdown(t):
 
 
 
+def hide_All_Sources():
+    list_Of_Sources_To_Hide = ["0" if hotkey_Num[2] == 9 else str(hotkey_Num[2] + 1)  for hotkey_Num in dict_Of_Scenes.values()]
+    return list_Of_Sources_To_Hide
+
 def record_Scene(scene_Image):
-    win = gw.getWindowsWithTitle('OBS')[0]
+    win = gw.getWindowsWithTitle('OBS 27.1.3')[0]
     win.maximize()
     win.activate()
 
-    countdown(7)
+    time.sleep(.75)
+
+    #Show scene
+
+    pyautogui.moveTo(470, 520)
+    pyautogui.click()
+
+    for scene in hide_All_Sources():
+        hotkey('shift', scene)
+
 
     hotkey('shift', str(dict_Of_Scenes[scene_Image][2]))
 
+    countdown(7)
+    time.sleep(.5)
+
+
+    #record
     hotkey('alt', '/')
 
     mixer.init()
-    mixer.music.load('Audio\\' + dict_Of_Scenes[user_Choice][1])
+    mixer.music.load('Audio\\' + dict_Of_Scenes[scene_Image][1])
     mixer.music.play()
     time.sleep(dict_Of_Scenes[scene_Image][3])
 
@@ -97,7 +117,7 @@ def record_Scene(scene_Image):
     else:
         hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
 
-    win = gw.getWindowsWithTitle('Green_Screen_Flask')[0]
+    win = gw.getWindowsWithTitle('Don Caps Green Screen Party App')[0]
     win.maximize()
     win.activate()
 
@@ -105,10 +125,11 @@ def record_Scene(scene_Image):
 scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard", "Disco"]
 
 if __name__ == '__main__':
+    hide_All_Sources()
     while True:
         user_Choice = ListDisplay(scenes).displayList()
 
-        record_Scene(user_Choice,dict_Of_Scenes[user_Choice])
+        record_Scene(user_Choice)
 
 
 
