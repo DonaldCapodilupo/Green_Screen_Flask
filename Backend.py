@@ -10,69 +10,28 @@ import pyautogui
 dict_Of_Scenes = {
     "Beach":("Beach.jpg", "Johnny B Goode.mp3",1, 54),
     "Graveyard":("Graveyard.jpg", "Thriller.mp3",7, 47),
-    "Disco":("Disco Backround.mp4", "Funky Town.mp3", 9, 46),
+    "Disco":("Disco Background.mp4", "Funky Town.mp3", 9, 46),
     "Old West":("Old West Town.jpg", "Old Town Road.mp3", 5, 29),
-    "Outer Space":("Space.png", "Rocketman.mp3", 3, 52)
+    "Outer Space":("Space.png", "Rocketman.mp3", 3, 52),
+
 
 
 }
 
-class ListDisplay:
-    def __init__(self, listToDisplay):
-        self.listToDisplay = listToDisplay
-
-    def displayList(self, addExit=True):
-        print("Which option would you like to choose")
-        s = 1  # This is the counter to display in the output string.
-        for i in self.listToDisplay:  # Loop through the menu options
-            print(str(s) + ") " + i)  # Display all of the items in the list as a menu
-            s += 1
-        if addExit:
-            print(str(s) + ") Exit" )
-            s += 1
-        userChoice = int(input(">"))  # Prompt the user to enter a number
-        # Reruns the prompt if the user enters a number that is to big
-        if userChoice == len(self.listToDisplay)+1:
-            exit()
-        while userChoice > len(self.listToDisplay):
-            print("Invalid data. Please enter a valid number")
-            print()
-            print("Which option would you like to choose")
-            s = 1  # This is the counter
-            for i in self.listToDisplay:  # Loop through the menu options
-                print(str(s) + ") " + i)  # Display all of the items in the list as a menu
-                s += 1
-            if addExit:
-                print(str(s) + ") Exit")
-                s += 1
-            userChoice = int(input(">"))
-            if userChoice == len(self.listToDisplay) + 1:
-                exit()
-        # Closes the program if the user selects "Exit"
-        # At some point I would like it to step back one function
-        if userChoice == (s - 1) and self.listToDisplay[-1] == "Exit":
-            print("Exiting")
-            exit()
-        # Converts the users numerical entry into the string version of the option selected.
-        userChoiceFINAL = self.listToDisplay[(int(userChoice) - 1)]
-        # Return the variable
-        return userChoiceFINAL
-
 def countdown(t):
     while t:
-        timefile = open("Counter.txt", "w")
-        mins, secs = divmod(t, 60)
-        if mins > 59:
-            hours, mins = divmod(mins, 60)
+        time_File = open("Counter.txt", "w")
+        minutes, secs = divmod(t, 60)
+        if minutes > 59:
+            hours, minutes = divmod(minutes, 60)
         else:
             hours = 0
-        timeformat = f"{hours:02d}:{mins:02d}:{secs:02d}"
-        timefile.write(timeformat)
-        timefile.close()
+        time_Format = f"{hours:02d}:{minutes:02d}:{secs:02d}"
+        time_File.write(time_Format)
+        time_File.close()
         time.sleep(1)
         t -= 1
     os.remove("Counter.txt")
-
 
 
 def hide_All_Sources():
@@ -114,6 +73,8 @@ def record_Scene(scene_Image):
 
     if dict_Of_Scenes[scene_Image][2]+1 == 10:
         hotkey('shift', '0')
+    elif dict_Of_Scenes[scene_Image][2] == "+":
+        hotkey('shift', '-')
     else:
         hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
 
@@ -123,13 +84,6 @@ def record_Scene(scene_Image):
 
 
 scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard", "Disco"]
-
-if __name__ == '__main__':
-    hide_All_Sources()
-    while True:
-        user_Choice = ListDisplay(scenes).displayList()
-
-        record_Scene(user_Choice)
 
 
 
