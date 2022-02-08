@@ -9,10 +9,11 @@ import pyautogui
 #Dict = userInput: (Image, MP3, scene_hotkey, length)
 dict_Of_Scenes = {
     "Beach":("Beach.jpg", "Johnny B Goode.mp3",1, 54),
-    "Graveyard":("Graveyard.jpg", "Thriller.mp3",7, 47),
-    "Disco":("Disco Background.mp4", "Funky Town.mp3", 9, 46),
-    "Old West":("Old West Town.jpg", "Old Town Road.mp3", 5, 29),
-    "Outer Space":("Space.png", "Rocketman.mp3", 3, 52),
+    "Graveyard":("Graveyard.jpg", "Thriller.mp3",2, 47),
+    "Disco":("Disco Background.mp4", "Funky Town.mp3", 3, 46),
+    "Old West":("Old West Town.jpg", "Old Town Road.mp3", 4, 29),
+    "Outer Space":("Space.png", "Rocketman.mp3", 5, 52),
+    "Mugshot":("Mugshot Height.png", "Jailhouse Rock.mp3", 6, 52)
 
 
 
@@ -34,9 +35,6 @@ def countdown(t):
     os.remove("Counter.txt")
 
 
-def hide_All_Sources():
-    list_Of_Sources_To_Hide = ["0" if hotkey_Num[2] == 9 else str(hotkey_Num[2] + 1)  for hotkey_Num in dict_Of_Scenes.values()]
-    return list_Of_Sources_To_Hide
 
 def record_Scene(scene_Image):
     win = gw.getWindowsWithTitle('OBS 27.1.3')[0]
@@ -50,8 +48,7 @@ def record_Scene(scene_Image):
     pyautogui.moveTo(470, 520)
     pyautogui.click()
 
-    for scene in hide_All_Sources():
-        hotkey('shift', scene)
+
 
 
     hotkey('shift', str(dict_Of_Scenes[scene_Image][2]))
@@ -71,19 +68,18 @@ def record_Scene(scene_Image):
 
     hotkey('alt', '/')
 
-    if dict_Of_Scenes[scene_Image][2]+1 == 10:
-        hotkey('shift', '0')
-    elif dict_Of_Scenes[scene_Image][2] == "+":
-        hotkey('shift', '-')
-    else:
-        hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
+    #if dict_Of_Scenes[scene_Image][2]+1 == 10:
+    #    hotkey('shift', '0')
+    #elif dict_Of_Scenes[scene_Image][2] == "+":
+    #    hotkey('shift', '-')
+    #else:
+    #    hotkey('shift', str(dict_Of_Scenes[scene_Image][2]+1))
 
     win = gw.getWindowsWithTitle('Don Caps Green Screen Party App')[0]
     win.maximize()
     win.activate()
 
 
-scenes = ["Beach", "Outer Space","Old West", "Mugshot", "Graveyard", "Disco"]
 
 
 
